@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+
+  "name": "Nuggets",
+  "description": "Nuggets helps you remember everything you learn. Record what your learn in nuggets of 200 chars (or less) and get timely reminders.",
+  "version": "2.0",
+
+  "browser_action": {
+    "default_icon": "img/nuggets_logo_notext.png",
+    "default_popup": "nuggets.html"
+  },
+  // Overides new tabs to open the dashboard
+  "chrome_url_overrides" : {
+    "newtab": "dashboard.html"
+  },
+  "permissions": [
+    // The following allows get requests to a test api.
+    "https://jsonplaceholder.typicode.com"
+    "contextMenus", 
+    "activeTab",
+    // TODO: full permissions seem way permissive
+    "*://*/*"
+  ],
+  "icons": {
+    "16": "img/nuggets16.png", 
+    "24": "img/nuggets24.png"
+  },
+  "background": {
+    "scripts": ["js/jquery-1.10.1.min.js", "js/parse-1.2.8.min.js", "js/contextmenu.js"]
+  }
+
+}
