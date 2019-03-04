@@ -15,7 +15,7 @@
   },
   "permissions": [
     // The following allows get requests to a test api.
-    "https://jsonplaceholder.typicode.com"
+    "https://jsonplaceholder.typicode.com",
     "contextMenus", 
     "activeTab",
     // TODO: full permissions seem way permissive
