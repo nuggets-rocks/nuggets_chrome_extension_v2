@@ -76,11 +76,13 @@ function updateMyNuggetsMarkup(results, highlightText)
 }
 
 function getCurrentUserToken() {
-    return JSON.parse(localStorage.getItem(CURRENT_NUGGET_USER))['token'];
+   return localStorage.getItem('currentNuggetUserToken');
+   // return JSON.parse(localStorage.getItem(CURRENT_NUGGET_USER))['token'];
 }
 
 function getCurrentUserId() {
-    return JSON.parse(localStorage.getItem(CURRENT_NUGGET_USER))['userId'];
+  return localStorage.getItem('currentNuggetUser');
+    //return JSON.parse(localStorage.getItem(CURRENT_NUGGET_USER))['userId'];
 }
 
 function doesUserCurrentExist() {
@@ -95,8 +97,11 @@ function runQuery()
 {
   var token = getCurrentUserToken();
   var userId = getCurrentUserId();
+
+  const fetchNuggetsUrl = 'http://localhost:8000/api/v0/user/' + userId + '/nuggets/';
+
   $.ajax({
-    url: "https://nuggets-django.herokuapp.com/api/v0/user/" + userId + "/nuggets",
+    url: fetchNuggetsUrl,
     type: 'GET',
     dataType: 'json',
     headers:{'Authorization':'Token ' + token},
@@ -111,7 +116,7 @@ function runQuery()
         my_nuggets = $.map(results_nugget_user, function(nugget) {
           var return_object = {};
           return_object.id = nugget.id;
-          return_object.text = nugget.text;
+          return_object.text = nugget.content;
           if (!nugget.tags)
           {
               return_object.tags = [];
@@ -120,9 +125,9 @@ function runQuery()
           {
               return_object.tags = nugget.tags;
           }
-          return_object.url = nugget.url;
+          return_object.url = nugget.source;
           return_object.source = nugget.source;
-          return_object.updatedAt = nugget.updatedAt;
+          return_object.updatedAt = nugget.updated_at;
           return return_object;
         });
         updateMyNuggetsMarkup(my_nuggets);
@@ -131,6 +136,7 @@ function runQuery()
     }
   });
 }
+
 
 function executeSearch()
 {

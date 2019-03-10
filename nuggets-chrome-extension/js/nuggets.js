@@ -43,6 +43,7 @@ function runQuery()
       dataType: 'json',
       headers:{'Authorization':'Token ' + token},
       success: function(results) {
+        alert(results);
         if (results.length == 0)
         {
           $('#related-nuggets-div').css("display", "none");
