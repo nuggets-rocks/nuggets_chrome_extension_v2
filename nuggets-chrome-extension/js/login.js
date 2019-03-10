@@ -1,11 +1,11 @@
 $(document).ready(function(){
-
-
 var CURRENT_NUGGET_USER = 'currentNuggetUser';
+var CURRENT_NUGGET_USER_TOKEN = 'currentNuggetUserToken';
 
 function initialize() {
   $("span[data-toggle=tooltip]").tooltip();
-  validateLogin();
+  //validateLogin();
+  $('#login-email').focus();
 }
 
 function validateEmail(email) { 
@@ -14,7 +14,8 @@ function validateEmail(email) {
 }
 
 function getCurrentUser() {
-    JSON.parse(localStorage.getItem(CURRENT_NUGGET_USER));
+     return localStorage.getItem(CURRENT_NUGGET_USER);
+    //localStorage.setItem(CURRENT_NUGGET_USER, null);
 }
 
 function saveCurrentUserInLocalStorage(user) {
@@ -33,6 +34,18 @@ function validateLogin() {
   }
 }
 
+function validateLoginForDashboard() {
+  var currentUser = getCurrentUser();
+  if (currentUser)
+  {
+    goToDashboardPage();
+  }
+  else
+  {
+    $('#login-email').focus();
+  }
+}
+
 function goToNuggetPage()
 {
   window.location.replace('nuggets.html');
@@ -41,6 +54,10 @@ function goToNuggetPage()
 function goToWelcomePage()
 {
   window.location.replace('welcome.html');
+}
+
+function goToDashboardPage() {
+  window.location.replace('dashboard.html');
 }
 
 initialize();
@@ -151,23 +168,36 @@ function attemptRegister()
     $('#register-error-2').css('display','none');
     $('#register-error-3').css('display','none');
     $('#register-error-4').css('display','none');
-    var user = new Parse.User();
-    user.set("displayname", $('#register-name').val());
-    user.set("username", $('#register-email').val());
-    user.set("password", $('#register-password').val());
-    user.set("email", $('#register-email').val());
-    user.signUp(null, {
-      success: function(user) {
-        goToWelcomePage();
-      },
-      error: function(user, error) {
-        $('#register-error-4').html(error.message);
-        $('#register-error-4').css('display','block');
-        $('#register-email').focus();
-      }
-    });
+    createNewUser($('#register-email').val(),$('#register-password').val());
   }
   $('#register-button').prop('disabled', false);
+}
+
+// Redirects to dashboard on success
+function createNewUser(username, password) {
+const registerUrl = 'http://localhost:8000/register/user-name/' + username + '/password/' + password;
+
+fetch(registerUrl)
+.then(res=>res.json())
+    .then((userIdJson) => {
+      // return promise of nuggets
+      localStorage.setItem(CURRENT_NUGGET_USER, userIdJson.user_id);
+      // Now get token
+        const authUrl = 'http://localhost:8000/api-token-auth/';
+        return fetch(authUrl, {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({username: username, password: password})
+        });
+    })
+    .then(res=>res.json())
+          .then((tokenJson) => {
+            localStorage.setItem(CURRENT_NUGGET_USER_TOKEN, tokenJson.token);
+            window.location.replace('dashboard.html');
+          });
 }
 
 $('#register-button').click(function()
