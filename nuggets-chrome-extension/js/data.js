@@ -1,57 +1,42 @@
 $(document).ready(function(){
-// first, make post request to fetch user
-var http = new XMLHttpRequest();
-var url = 'http://localhost:8000/api-token-auth/';
-var params = 'username=shiva&password=shivarocks';
-http.open('POST', url, true);
-//Send the proper header information along with the request
-http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+const authUrl = 'http://localhost:8000/api-token-auth/';
 
-var token;
-
-http.onreadystatechange = function() {//Call a function when the state changes.
-    if(http.readyState == 4 && http.status == 200) {
-        token = JSON.parse(http.responseText).token;
-
-        alert("got token " + token);
-
-        // Now let's fetch using this token
-		var xhr = new XMLHttpRequest();
-		// Random get request
-		xhr.open("GET", "https://jsonplaceholder.typicode.com/posts", true);
-		xhr.onreadystatechange = function() {
-		  if (xhr.readyState == 4) {
-		    var resp = JSON.parse(xhr.responseText);
-		    for (var i = 0; i < resp.length; i++) {
-		            tr = $('<tr/>');
-		            tr.append("<td>" + resp[i].id + "</td>");
-		            tr.append("<td>" + resp[i].title + "</td>");
-		            $('table').append(tr);
-		        }
-		  }
-		}
-		xhr.send();
-
-    }
-}
-http.send(params)
+fetch(authUrl, {
+  method: 'post',
+  headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({username: 'shiva', password: 'shivarocks'})
+}).then(res=>res.json())
+  .then((tokenJson) => {
+  	// return promise of nuggets
+  	return fetchNuggetsWithToken(tokenJson.token);
+  })
+.then(data=>{ return data.json()})
+//.then(resp=> alert(JSON.stringify(resp)));
+.then(jsonResponse=>displayNuggets(jsonResponse));
 })
 
+function fetchNuggetsWithToken(token) {
+const authHeader = 'Token ' + token;
+const fetchNuggetsUrl = 'http://localhost:8000/api/v0/user/1/nuggets/';	
+return fetch(fetchNuggetsUrl, {
+  method: 'get',
+  headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json',
+    'Authorization': authHeader,
+  },
+});
+}
 
-//alert("time for post1!");
-
-	// var http = new XMLHttpRequest();
-	// var url = 'http://localhost:8000/api-token-auth/';
-	// var params = 'username=shiva&password=shivarocks';
-	// http.open('POST', url, true);
-	// //Send the proper header information along with the request
-	// http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-
-	// http.onreadystatechange = function() {//Call a function when the state changes.
-	//     if(http.readyState == 4 && http.status == 200) {
-	//         alert(http.responseText);
-	//     }
-	// }
-	// http.send(params);
+function displayNuggets(jsonNuggets) {
+for (var i = 0; i < jsonNuggets.length; i++) {
+	tr = $('<tr/>');
+	tr.append("<td>" + jsonNuggets[i].source + "</td>");
+	tr.append("<td>" + jsonNuggets[i].content + "</td>");
+	$('table').append(tr);
+}
+}
 
