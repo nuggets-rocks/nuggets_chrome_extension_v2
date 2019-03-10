@@ -11,6 +11,7 @@ function doesUserCurrentExist() {
 }
 
 function contextMenuClicked(info, tab) {
+	alert("boo yaa")
 	if (!doesUserCurrentExist())
 	{
 		alert('Login in the chrome extension above!');

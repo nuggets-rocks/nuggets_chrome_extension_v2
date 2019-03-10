@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+
 var CURRENT_NUGGET_USER = 'currentNuggetUser';
 
 function initialize() {
