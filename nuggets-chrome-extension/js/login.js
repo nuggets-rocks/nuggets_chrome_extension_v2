@@ -208,7 +208,7 @@ fetch(registerUrl)
     .then(res=>res.json())
           .then((tokenJson) => {
             localStorage.setItem(CURRENT_NUGGET_USER_TOKEN, tokenJson.token);
-            window.location.replace('dashboard.html');
+            window.location.replace('nuggets.html');
           });
 }
 
