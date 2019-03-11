@@ -154,15 +154,17 @@ $('#add-nugget-button').click(function()
         tagsToSave = tagsText.split(',');
       }
 
-      var currentUserId = getCurrentUserId();
-      var currentUserToken = getCurrentUserToken();
-      var dataMap = { text: $('#nugget-text').val(), tags: tagsToSave, source: $('#nugget-source').val(), url: tabURL };
+      var currentUserId = localStorage.getItem('currentNuggetUser');
+      var currentUserToken = localStorage.getItem('currentNuggetUserToken');
+      const authHeader = 'Token ' + currentUserToken;
+      // TODO(shgar,karthik): Need to add url.
+      const createNuggetUrl = 
+      'http://localhost:8000/api/v0/user/' + currentUserId + '/content/' + $('#nugget-text').val() + '/source/' + $('#nugget-source').val();
+
       $.ajax({
-        url: "https://nuggets-django.herokuapp.com/api/v0/user/" + currentUserId + "/",
-        data: dataMap,
-        type: 'POST',
-        dataType: 'json',
-        headers:{'Authorization':'Token ' + currentUserToken},
+        url: createNuggetUrl,
+        type: 'GET',
+        headers:{'Authorization': authHeader},
         success: function(nugget_user)
         {
             $('#nugget-message').css('color','green');
@@ -171,7 +173,7 @@ $('#add-nugget-button').click(function()
             $('#nugget-text').val("");
             $('#nugget-source').val(tab.title);
             $('#nugget-tags').val("");
-            runQuery();
+            //runQuery();
             $('.icon-remove-tag').each(function() {
                 $(this).click();
             });
@@ -187,6 +189,7 @@ $('#add-nugget-button').click(function()
             $('#add-nugget-button').prop('disabled', false);
         }
       });
+
     });
   }
 });
@@ -229,7 +232,7 @@ function validateLogin() {
   }
   else
   {
-    runQuery();
+    //runQuery();
   }
 }
 
