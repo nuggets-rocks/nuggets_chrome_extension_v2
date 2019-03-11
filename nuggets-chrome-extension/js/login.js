@@ -77,19 +77,31 @@ function attemptLogin()
     $('#login-error-1').css('display','none');
     $('#login-error-2').css('display','none');
     $('#login-password-message').css('display','none');
-    $.post("https://nuggets-django.herokuapp.com/api-token-auth/",
-      {
-          username: $('#login-email').val(),
-          password: $('#login-password').val()
-      },
-      function(response, status){
-          saveCurrentUserInLocalStorage(response);
-          goToNuggetPage();
-      },
-      function(user, error) {
-        $('#login-error-2').css('display','block');
-        $('#login-email').focus();
-      });
+
+    const loginUrl = 'http://localhost:8000/login/user-name/' + $('#login-email').val() + '/password/' + $('#login-password').val();
+
+    // TODO(shiva): Handle failure/error cases.
+    fetch(loginUrl)
+    .then(res=>res.json())
+    .then(userIdJson => {
+      localStorage.setItem(CURRENT_NUGGET_USER, userIdJson.user_id);
+      localStorage.setItem(CURRENT_NUGGET_USER_TOKEN, userIdJson.token);
+      // alert('all good' + userIdJson.user_id + '?');
+      window.location.replace('nuggets.html');
+    });
+
+    // $.get(loginUrl,
+    //   function(response, status) {
+          
+    //       saveCurrentUserInLocalStorage(response);
+    //       alert('success!' + JSON.parse(response).user_id + ' token is ' + JSON.parse(response).token);
+    //       //goToNuggetPage();
+    //   },
+    //   function(user, error) {
+    //     $('#login-error-2').css('display','block');
+    //     $('#login-email').focus();
+    //   });
+
   }
   $('#login-button').prop('disabled', false);
 }

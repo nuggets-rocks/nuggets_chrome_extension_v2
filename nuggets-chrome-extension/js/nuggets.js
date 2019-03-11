@@ -1,4 +1,6 @@
 $(document).ready(function(){
+  var CURRENT_NUGGET_USER = localStorage.getItem('currentNuggetUser');
+  var CURRENT_NUGGET_USER_TOKEN = localStorage.getItem('currentNuggetUserToken');
 
 function initialize() {
   chrome.tabs.query({active:true,currentWindow:true},function(tabArray){
@@ -24,7 +26,7 @@ function getCurrentUserId() {
 }
 
 function doesUserCurrentExist() {
-  return localStorage.getItem(CURRENT_NUGGET_USER);
+  return localStorage.getItem('currentNuggetUser');
 }
 
 function removeUserObjectFromLocalStorage() {

@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 var my_nuggets = [];
 var CURRENT_NUGGET_USER = 'currentNuggetUser';
+var CURRENT_NUGGET_USER_TOKEN = 'currentNuggetUser';
 
 
 $('#my-nuggets-table').on('click', 'a.nugget-source-link', function(event) {
@@ -91,6 +92,7 @@ function doesUserCurrentExist() {
 
 function removeUserObjectFromLocalStorage() {
   localStorage.removeItem(CURRENT_NUGGET_USER);
+  localStorage.removeItem(CURRENT_NUGGET_USER_TOKEN);
 }
 
 function runQuery()
