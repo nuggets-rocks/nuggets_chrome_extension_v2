@@ -13,7 +13,7 @@ $(document).ready(function() {
 
 function fetchNuggetsWithToken(token, userId) {
 const authHeader = 'Token ' + token;
-const fetchNuggetsUrl = 'http://localhost:8000/api/v0/user/' + userId + '/nuggets/';	
+const fetchNuggetsUrl = 'http://localhost:8000/api/v0/user/' + userId + '/review/';	
 return fetch(fetchNuggetsUrl, {
   method: 'get',
   headers: {
