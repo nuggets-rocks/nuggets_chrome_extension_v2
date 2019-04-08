@@ -1,8 +1,6 @@
 $(document).ready(function(){
 
 var my_nuggets = [];
-var CURRENT_NUGGET_USER = 'currentNuggetUser';
-var CURRENT_NUGGET_USER_TOKEN = 'currentNuggetUser';
 
 $('#my-nuggets-table').on('click', 'a.nugget-source-link', function(event) {
   chrome.tabs.create({url: $(this).attr('href')});
@@ -76,12 +74,12 @@ function updateMyNuggetsMarkup(results, highlightText)
 }
 
 function getCurrentUserToken() {
-   return localStorage.getItem('currentNuggetUserToken');
+   return localStorage.getItem(CURRENT_NUGGET_USER_TOKEN);
    // return JSON.parse(localStorage.getItem(CURRENT_NUGGET_USER))['token'];
 }
 
 function getCurrentUserId() {
-  return localStorage.getItem('currentNuggetUser');
+  return localStorage.getItem(CURRENT_NUGGET_USER);
     //return JSON.parse(localStorage.getItem(CURRENT_NUGGET_USER))['userId'];
 }
 

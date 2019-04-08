@@ -1,10 +1,4 @@
 $(document).ready(function(){
-  var CURRENT_NUGGET_USER = localStorage.getItem('currentNuggetUser');
-  var CURRENT_NUGGET_USER_TOKEN = localStorage.getItem('currentNuggetUserToken');
-  const prodNuggetsURLRoot = "https://nuggets-service.herokuapp.com"
-  const devNuggetsURLRoot = "http://localhost:8000"; 
-  const nuggetsURLRoot = devNuggetsURLRoot; 
-
 function initialize() {
   chrome.tabs.query({active:true,currentWindow:true},function(tabArray){
     var tab = tabArray[0];
@@ -21,16 +15,9 @@ function goToLoginPage()
   window.location.replace('login.html');
 }
 
-function getCurrentUserToken() {
-  return JSON.parse(localStorage.getItem(CURRENT_NUGGET_USER))['token'];
-}
-
-function getCurrentUserId() {
-  return JSON.parse(localStorage.getItem(CURRENT_NUGGET_USER))['userId'];
-}
 
 function doesUserCurrentExist() {
-  return localStorage.getItem('currentNuggetUser');
+  return localStorage.getItem(CURRENT_NUGGET_USER);
 }
 
 function removeUserObjectFromLocalStorage() {
@@ -160,12 +147,12 @@ $('#add-nugget-button').click(function()
         tagsToSave = tagsText.split(',');
       }
 
-      var currentUserId = localStorage.getItem('currentNuggetUser');
-      var currentUserToken = localStorage.getItem('currentNuggetUserToken');
+      let currentUserId = localStorage.getItem(CURRENT_NUGGET_USER);
+      let currentUserToken = localStorage.getItem(CURRENT_NUGGET_USER_TOKEN);
       const authHeader = 'Token ' + currentUserToken;
       // TODO(shgar,karthik): Need to add url.
       const createNuggetUrl = 
-      nuggetsURLRoot + '/api/v0/user/' + currentUserId + '/content/' + $('#nugget-text').val() + '/source/' + $('#nugget-source').val() + '/url/' + $('#nugget-url').val();
+      NUGGETS_BASE_URL + '/api/v0/user/' + currentUserId + '/content/' + $('#nugget-text').val() + '/source/' + $('#nugget-source').val() + '/url/' + $('#nugget-url').val();
 
       $.ajax({
         url: createNuggetUrl,

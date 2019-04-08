@@ -1,7 +1,4 @@
 $(document).ready(function(){
-var CURRENT_NUGGET_USER = 'currentNuggetUser';
-var CURRENT_NUGGET_USER_TOKEN = 'currentNuggetUserToken';
-
 function initialize() {
   $("span[data-toggle=tooltip]").tooltip();
   //validateLogin();
