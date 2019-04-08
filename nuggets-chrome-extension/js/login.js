@@ -2,10 +2,6 @@ $(document).ready(function(){
 var CURRENT_NUGGET_USER = 'currentNuggetUser';
 var CURRENT_NUGGET_USER_TOKEN = 'currentNuggetUserToken';
 
-const prodNuggetsURLRoot = "https://nuggets-service.herokuapp.com"
-const devNuggetsURLRoot = "http://localhost:8000"; 
-const nuggetsURLRoot = devNuggetsURLRoot; 
-
 function initialize() {
   $("span[data-toggle=tooltip]").tooltip();
   //validateLogin();
@@ -82,7 +78,7 @@ function attemptLogin()
     $('#login-error-2').css('display','none');
     $('#login-password-message').css('display','none');
 
-    const loginUrl = nuggetsURLRoot + '/login/user-name/' + $('#login-email').val() + '/password/' + $('#login-password').val();
+    const loginUrl = NUGGETS_BASE_URL + '/login/user-name/' + $('#login-email').val() + '/password/' + $('#login-password').val();
 
     // TODO(shiva): Handle failure/error cases.
     fetch(loginUrl)
@@ -191,7 +187,7 @@ function attemptRegister()
 
 // Redirects to dashboard on success
 function createNewUser(username, password) {
-const registerUrl = nuggetsURLRoot +'/register/user-name/' + username + '/password/' + password;
+const registerUrl = NUGGETS_BASE_URL +'/register/user-name/' + username + '/password/' + password;
 
 fetch(registerUrl)
 .then(res=>res.json())
@@ -199,7 +195,7 @@ fetch(registerUrl)
       // return promise of nuggets
       localStorage.setItem(CURRENT_NUGGET_USER, userIdJson.user_id);
       // Now get token
-        const authUrl = nuggetsURLRoot +'/api-token-auth/';
+        const authUrl = NUGGETS_BASE_URL +'/api-token-auth/';
         return fetch(authUrl, {
           method: 'post',
           headers: {

@@ -4,11 +4,6 @@ var my_nuggets = [];
 var CURRENT_NUGGET_USER = 'currentNuggetUser';
 var CURRENT_NUGGET_USER_TOKEN = 'currentNuggetUser';
 
-const prodNuggetsURLRoot = "https://nuggets-service.herokuapp.com"
-const devNuggetsURLRoot = "http://localhost:8000"; 
-const nuggetsURLRoot = devNuggetsURLRoot; 
-
-
 $('#my-nuggets-table').on('click', 'a.nugget-source-link', function(event) {
   chrome.tabs.create({url: $(this).attr('href')});
   return false;
@@ -104,7 +99,7 @@ function runQuery()
   var token = getCurrentUserToken();
   var userId = getCurrentUserId();
 
-  const fetchNuggetsUrl = nuggetsURLRoot + '/api/v0/user/' + userId + '/nuggets/';
+  const fetchNuggetsUrl = NUGGETS_BASE_URL + '/api/v0/user/' + userId + '/nuggets/';
 
   $.ajax({
     url: fetchNuggetsUrl,
@@ -233,7 +228,6 @@ function validateLogin() {
     runQuery();
   }
 }
-
 initialize();
 
 $('#logout-button').click(function()
