@@ -11,7 +11,7 @@
   },
   // Overides new tabs to open the dashboard
   "chrome_url_overrides" : {
-    "newtab": "dashboard.html"
+    "newtab": "newTab.html"
   },
   "permissions": [
     // The following allows get requests to a test api.
@@ -26,7 +26,6 @@
     "24": "img/nuggets24.png"
   },
   "background": {
-    "scripts": ["js/jquery-1.10.1.min.js", "js/parse-1.2.8.min.js", "js/contextmenu.js"]
+    "scripts": ["js/jquery-3.3.1.slim.min.js", "js/bootstrap.min.js", "js/contextmenu.js", "js/popper.min.js"]
   }
-
 }

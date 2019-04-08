@@ -1,6 +1,9 @@
 $(document).ready(function(){
   var CURRENT_NUGGET_USER = localStorage.getItem('currentNuggetUser');
   var CURRENT_NUGGET_USER_TOKEN = localStorage.getItem('currentNuggetUserToken');
+  const prodNuggetsURLRoot = "https://nuggets-service.herokuapp.com"
+  const devNuggetsURLRoot = "http://localhost:8000"; 
+  const nuggetsURLRoot = devNuggetsURLRoot; 
 
 function initialize() {
   chrome.tabs.query({active:true,currentWindow:true},function(tabArray){
@@ -161,7 +164,7 @@ $('#add-nugget-button').click(function()
       const authHeader = 'Token ' + currentUserToken;
       // TODO(shgar,karthik): Need to add url.
       const createNuggetUrl = 
-      'http://localhost:8000/api/v0/user/' + currentUserId + '/content/' + $('#nugget-text').val() + '/source/' + $('#nugget-source').val();
+      nuggetsURLRoot + '/api/v0/user/' + currentUserId + '/content/' + $('#nugget-text').val() + '/source/' + $('#nugget-source').val();
 
       $.ajax({
         url: createNuggetUrl,
