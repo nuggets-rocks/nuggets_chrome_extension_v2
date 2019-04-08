@@ -11,6 +11,7 @@ function initialize() {
     // alert(tab.url)
  // chrome.tabs.getSelected(null, function(tab) {
     $('#nugget-source').val(tab.title);
+    $('#nugget-url').val(tab.url);
   });
   validateLogin();
 }
@@ -164,7 +165,7 @@ $('#add-nugget-button').click(function()
       const authHeader = 'Token ' + currentUserToken;
       // TODO(shgar,karthik): Need to add url.
       const createNuggetUrl = 
-      nuggetsURLRoot + '/api/v0/user/' + currentUserId + '/content/' + $('#nugget-text').val() + '/source/' + $('#nugget-source').val();
+      nuggetsURLRoot + '/api/v0/user/' + currentUserId + '/content/' + $('#nugget-text').val() + '/source/' + $('#nugget-source').val() + '/url/' + $('#nugget-url').val();
 
       $.ajax({
         url: createNuggetUrl,

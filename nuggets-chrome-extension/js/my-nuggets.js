@@ -61,7 +61,7 @@ function updateMyNuggetsMarkup(results, highlightText)
     markup_to_push += '</p>'
     if (results[i].url && results[i].url != "")
     {
-      markup_to_push += '<p><a href="' + results[i].url + '" class="nugget-source-link">' + addHighlightMarkup(results[i].source, highlightText) + '</a></p>';
+      markup_to_push += '<p><a href="' + results[i].url + '" class="nugget-source-link">' + addHighlightMarkup(results[i].url, highlightText) + '</a></p>';
     }
     else if (results[i].source != "")
     {
@@ -131,7 +131,7 @@ function runQuery()
           {
               return_object.tags = nugget.tags;
           }
-          return_object.url = nugget.source;
+          return_object.url = nugget.url;
           return_object.source = nugget.source;
           return_object.updatedAt = nugget.updated_at;
           return return_object;
