@@ -11,16 +11,16 @@
 	var CURRENT_NUGGET_USER_TOKEN = 'currentNuggetUserToken';
 }
 
-function createNuggets(onSuccess, onFailure) {
+function createNuggets(createNuggetsRequest,onSuccess, onFailure) {
       let currentUserId = localStorage.getItem(CURRENT_NUGGET_USER);
       let currentUserToken = localStorage.getItem(CURRENT_NUGGET_USER_TOKEN);
 	  const authHeader = 'Token ' + currentUserToken;
 
       const createNuggetUrl = 
       NUGGETS_BASE_URL + '/api/v0/user/' + 
-      currentUserId + '/content/' + $('#nugget-text').val() + 
-      '/source/' + $('#nugget-source').val() + 
-      '/url/' + $('#nugget-url').val();
+      currentUserId + '/content/' + createNuggetsRequest.content + 
+      '/source/' + createNuggetsRequest.source + 
+      '/url/' + createNuggetsRequest.url;
 
       $.ajax({
         url: createNuggetUrl,

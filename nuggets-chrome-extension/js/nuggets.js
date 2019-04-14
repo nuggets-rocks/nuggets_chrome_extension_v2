@@ -147,9 +147,7 @@ $('#add-nugget-button').click(function()
         tagsToSave = tagsText.split(',');
       }
 
-      let onSuccess = function(nugget_user)
-        {
-          alert(nugget_user);
+      let onSuccess = function(nugget_user) {
             $('#nugget-message').css('color','green');
             $('#nugget-message').html("Saved! Your first reminder will be tomorrow!");
             $('#nugget-message').css('display','block');
@@ -162,18 +160,21 @@ $('#add-nugget-button').click(function()
             });
             $('#nugget-text').focus();
             $('#add-nugget-button').prop('disabled', false);
-        }
+      }
 
-      let onFailure = function(object, error)
-        {
+      let onFailure = function(object, error) {
             $('#nugget-message').css('color','red');
             $('#nugget-message').html(error.message);
             $('#nugget-message').css('display','block');
             $('#nugget-text').focus();
             $('#add-nugget-button').prop('disabled', false);
-        }
+      }
 
-      createNuggets(onSuccess, onFailure);
+      createNuggets({content : $('#nugget-text').val(),
+        source : $('#nugget-source').val(),
+        url: $('#nugget-url').val()},
+        onSuccess,
+        onFailure);
 
     });
   }
