@@ -24,8 +24,8 @@ function contextMenuClicked(info, tab) {
 		}
 		else
 		{
-			var currentUserId = getCurrentUserId();
-			var currentUserToken = getCurrentUserToken();
+			let currentUserId = localStorage.getItem(CURRENT_NUGGET_USER);
+			let currentUserToken = localStorage.getItem(CURRENT_NUGGET_USER_TOKEN);
 			var dataMap = { text: info.selectionText, source: tab.title, url: tab.url };
 			$.ajax({
 				url: "https://nuggets-django.herokuapp.com/api/v0/user/" + currentUserId + "/",

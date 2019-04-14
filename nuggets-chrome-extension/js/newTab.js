@@ -1,6 +1,6 @@
 $(document).ready(function() {
-	let currentUserId = localStorage.getItem('currentNuggetUser');
-	let currentUserToken = localStorage.getItem('currentNuggetUserToken');
+	let currentUserId = localStorage.getItem(CURRENT_NUGGET_USER);
+	let currentUserToken = localStorage.getItem(CURRENT_NUGGET_USER_TOKEN);
 
 	if (isNaN(currentUserId)) {
 		window.location.replace('login.html');

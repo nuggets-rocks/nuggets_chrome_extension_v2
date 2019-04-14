@@ -147,19 +147,9 @@ $('#add-nugget-button').click(function()
         tagsToSave = tagsText.split(',');
       }
 
-      let currentUserId = localStorage.getItem(CURRENT_NUGGET_USER);
-      let currentUserToken = localStorage.getItem(CURRENT_NUGGET_USER_TOKEN);
-      const authHeader = 'Token ' + currentUserToken;
-      // TODO(shgar,karthik): Need to add url.
-      const createNuggetUrl = 
-      NUGGETS_BASE_URL + '/api/v0/user/' + currentUserId + '/content/' + $('#nugget-text').val() + '/source/' + $('#nugget-source').val() + '/url/' + $('#nugget-url').val();
-
-      $.ajax({
-        url: createNuggetUrl,
-        type: 'GET',
-        headers:{'Authorization': authHeader},
-        success: function(nugget_user)
+      let onSuccess = function(nugget_user)
         {
+          alert(nugget_user);
             $('#nugget-message').css('color','green');
             $('#nugget-message').html("Saved! Your first reminder will be tomorrow!");
             $('#nugget-message').css('display','block');
@@ -172,8 +162,9 @@ $('#add-nugget-button').click(function()
             });
             $('#nugget-text').focus();
             $('#add-nugget-button').prop('disabled', false);
-        },
-        error: function(object, error)
+        }
+
+      let onFailure = function(object, error)
         {
             $('#nugget-message').css('color','red');
             $('#nugget-message').html(error.message);
@@ -181,7 +172,8 @@ $('#add-nugget-button').click(function()
             $('#nugget-text').focus();
             $('#add-nugget-button').prop('disabled', false);
         }
-      });
+
+      createNuggets(onSuccess, onFailure);
 
     });
   }

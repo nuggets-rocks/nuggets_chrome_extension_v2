@@ -1,3 +1,5 @@
+// Global variables should go inside the following block.
+// Local variables not meant to have global scope should be defined with let rather than var
 {
 	// use let to restrict scope to variable
 	let prodBaseUrl = "https://nuggets-service.herokuapp.com"
@@ -8,3 +10,25 @@
 	var CURRENT_NUGGET_USER = 'currentNuggetUser';
 	var CURRENT_NUGGET_USER_TOKEN = 'currentNuggetUserToken';
 }
+
+function createNuggets(onSuccess, onFailure) {
+      let currentUserId = localStorage.getItem(CURRENT_NUGGET_USER);
+      let currentUserToken = localStorage.getItem(CURRENT_NUGGET_USER_TOKEN);
+	  const authHeader = 'Token ' + currentUserToken;
+
+      const createNuggetUrl = 
+      NUGGETS_BASE_URL + '/api/v0/user/' + 
+      currentUserId + '/content/' + $('#nugget-text').val() + 
+      '/source/' + $('#nugget-source').val() + 
+      '/url/' + $('#nugget-url').val();
+
+      $.ajax({
+        url: createNuggetUrl,
+        type: 'GET',
+        headers:{'Authorization': authHeader},
+        success: onSuccess,
+        error: onFailure
+      });
+}
+
+
