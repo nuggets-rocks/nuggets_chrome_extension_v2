@@ -42,9 +42,8 @@ function createNuggets(createNuggetsRequest) {
 	  	if (this.readyState ==4 && this.status==200) {
 	  		alert('Nugget saved! Look out for your daily reminders in the new tab.');
 		} else {
-			// Do nothing. The click even might be triggered multiple
+			// Do nothing. The click event might be triggered multiple
 			// times.
-			// alert('Something went wrong. Please try again later.');
 		}
 	  }
 }
