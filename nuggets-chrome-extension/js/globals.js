@@ -5,6 +5,8 @@
 	let prodBaseUrl = "https://nuggets-service.herokuapp.com"
 	let devBaseUrl = "http://localhost:8000"; 
 	// using VAR makes it global and accessible outside of block scope!
+  // NOTE: This not not injected into contextmenu.js and so the url
+  // has to be updated manually! Please do so when switching env.
 	var NUGGETS_BASE_URL = devBaseUrl; 
 
 	var CURRENT_NUGGET_USER = 'currentNuggetUser';

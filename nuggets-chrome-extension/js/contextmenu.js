@@ -1,45 +1,52 @@
-function getCurrentUserToken() {
-    return JSON.parse(localStorage.getItem(CURRENT_NUGGET_USER))['token'];
-}
-
-function getCurrentUserId() {
-    return JSON.parse(localStorage.getItem(CURRENT_NUGGET_USER))['userId'];
-}
-
-function doesUserCurrentExist() {
-    return localStorage.getItem(CURRENT_NUGGET_USER);
-}
-
+// No globals in this file  since there is no html
+// to inject the js into.
 function contextMenuClicked(info, tab) {
-	alert("boo yaa")
-	if (!doesUserCurrentExist())
+	if (!localStorage.getItem('currentNuggetUser'))
 	{
 		alert('Login in the chrome extension above!');
+		return;
 	}
-	else
+
+	if (info.selectionText.length > 200)
 	{
-		if (info.selectionText.length > 200)
-		{
-			alert('Nuggets must be 200 characters or less!');
-		}
-		else
-		{
-			let currentUserId = localStorage.getItem(CURRENT_NUGGET_USER);
-			let currentUserToken = localStorage.getItem(CURRENT_NUGGET_USER_TOKEN);
-			var dataMap = { text: info.selectionText, source: tab.title, url: tab.url };
-			$.ajax({
-				url: "https://nuggets-django.herokuapp.com/api/v0/user/" + currentUserId + "/",
-				data: dataMap,
-				type: 'POST',
-				dataType: 'json',
-				headers:{'Authorization':'Token ' + currentUserToken},
-				success: function(nugget_user)
-				{
-					alert('Nugget saved!');
-				}
-			});
-		}
+		alert('Nuggets must be 200 characters or less!');
+		return;
 	}
+
+	createNuggets({content : info.selectionText,
+	source : tab.title,
+	url: tab.url});
+}
+
+// This is a copy pasta of the one in globals.js
+function createNuggets(createNuggetsRequest) {
+      let currentUserId = localStorage.getItem('currentNuggetUser');
+      let currentUserToken = localStorage.getItem('currentNuggetUserToken');
+	  const authHeader = 'Token ' + currentUserToken;
+
+	  let prodBaseUrl = "https://nuggets-service.herokuapp.com"
+	  let devBaseUrl = "http://localhost:8000"; 
+	  let NUGGETS_BASE_URL = devBaseUrl; 
+
+	  const createNuggetUrl = 
+      NUGGETS_BASE_URL + '/api/v0/user/' + 
+      currentUserId + '/content/' + createNuggetsRequest.content + 
+      '/source/' + createNuggetsRequest.source + 
+      '/url/' + createNuggetsRequest.url;
+
+	  const req = new XMLHttpRequest();
+	  req.open("GET", createNuggetUrl);
+	  req.setRequestHeader('Authorization', authHeader);
+	  req.send();
+	  req.onreadystatechange=function(){
+	  	if (this.readyState ==4 && this.status==200) {
+	  		alert('Nugget saved! Look out for your daily reminders in the new tab.');
+		} else {
+			// Do nothing. The click even might be triggered multiple
+			// times.
+			// alert('Something went wrong. Please try again later.');
+		}
+	  }
 }
 
 chrome.contextMenus.create({
