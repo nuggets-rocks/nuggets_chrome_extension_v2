@@ -26,7 +26,7 @@ function createNuggets(createNuggetsRequest) {
 
 	  let prodBaseUrl = "https://nuggets-service.herokuapp.com"
 	  let devBaseUrl = "http://localhost:8000"; 
-	  let NUGGETS_BASE_URL = devBaseUrl; 
+	  let NUGGETS_BASE_URL = prodBaseUrl; 
 
 	  const createNuggetUrl = 
       NUGGETS_BASE_URL + '/api/v0/user/' + 
