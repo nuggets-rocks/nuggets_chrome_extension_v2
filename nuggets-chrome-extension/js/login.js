@@ -1,13 +1,22 @@
 $(document).ready(function(){
 function initialize() {
-  $("span[data-toggle=tooltip]").tooltip();
-  //validateLogin();
-  $('#login-email').focus();
-}
+   // Read it using the storage API
+    chrome.storage.sync.get(['currentNuggetUser2'], function(items) {
+      alert("goody!! I got this -> ");
+      alert('Value currently is ' + items.key)
+      //alert('Settings retrieved' + items);
+    });
 
-function validateEmail(email) { 
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+  alert("Let's see what's in the cache - " + localStorage.getItem('currentNuggetUser2'));
+  //alert(getCurrentUser());
+  if (getCurrentUser()) {
+    // Already logged in.
+    alert("Already logged in!");
+  } else {
+    let loginInNewTab = NUGGETS_BASE_URL + "/login";
+    $("#register-button2-a").attr("href", loginInNewTab);
+    $("#go-to-login").attr("href", loginInNewTab);
+  }
 }
 
 function getCurrentUser() {
@@ -19,7 +28,7 @@ function saveCurrentUserInLocalStorage(user) {
     localStorage.setItem(CURRENT_NUGGET_USER, JSON.stringify(user))
 }
 
-function validateLogin() {
+function validateLogin() {  
   var currentUser = getCurrentUser();
   if (currentUser)
   {
@@ -212,6 +221,11 @@ fetch(registerUrl)
 $('#register-button').click(function()
 {
   attemptRegister();
+});
+
+$('#register-button2').click(function()
+{
+  alert('poppop');
 });
 
 $('#register-password').keyup(function(e)

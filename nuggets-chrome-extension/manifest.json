@@ -18,9 +18,13 @@
     // "https://jsonplaceholder.typicode.com",
     "contextMenus", 
     "activeTab",
+    "storage",
     // TODO: full permissions seem way permissive
     "*://*/*"
   ],
+  "externally_connectable": {
+  "matches": ["*://127.0.0.1/*","http://localhost:8000/login" ,"*://*.example.com/*"]
+  },
   "icons": {
     "16": "img/nuggets16.png", 
     "24": "img/nuggets24.png"
@@ -28,4 +32,5 @@
   "background": {
     "scripts": ["js/jquery-3.3.1.slim.min.js", "js/bootstrap.min.js", "js/contextmenu.js", "js/popper.min.js"]
   }
+
 }

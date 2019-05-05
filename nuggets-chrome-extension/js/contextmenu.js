@@ -53,3 +53,12 @@ chrome.contextMenus.create({
 	"contexts": ['selection'],
 	"onclick": contextMenuClicked
 });
+
+chrome.runtime.onMessageExternal.addListener(
+  function(request, sender, sendResponse) {
+    if (request.greeting == "hello") {
+      sendResponse({farewell: "sayonara"});
+  	 }
+  });
+
+
