@@ -1,18 +1,10 @@
 $(document).ready(function(){
 function initialize() {
-   // Read it using the storage API
-    chrome.storage.sync.get(['currentNuggetUser2'], function(items) {
-      alert("goody!! I got this -> ");
-      alert('Value currently is ' + items.key)
-      //alert('Settings retrieved' + items);
-    });
-
-  alert("Let's see what's in the cache - " + localStorage.getItem('currentNuggetUser2'));
-  //alert(getCurrentUser());
-  if (getCurrentUser()) {
+  if (localStorage.getItem('currentNuggetUser')) {
     // Already logged in.
-    alert("Already logged in!");
+    alert("Already logged in! Woohoo");
   } else {
+    // Redirect to the login page in the new tab.
     let loginInNewTab = NUGGETS_BASE_URL + "/login";
     $("#register-button2-a").attr("href", loginInNewTab);
     $("#go-to-login").attr("href", loginInNewTab);

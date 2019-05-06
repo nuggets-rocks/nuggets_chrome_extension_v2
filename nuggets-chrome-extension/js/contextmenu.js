@@ -54,11 +54,12 @@ chrome.contextMenus.create({
 	"onclick": contextMenuClicked
 });
 
+// This now contains not contextMenu related stuff. Let's rename this
 chrome.runtime.onMessageExternal.addListener(
   function(request, sender, sendResponse) {
-    if (request.greeting == "hello") {
-      sendResponse({farewell: "sayonara"});
-  	 }
+      localStorage.setItem('currentNuggetUser', request.nuggetsMessage.user_id);
+      localStorage.setItem('currentNuggetUserToken', request.nuggetsMessage.token);
+      sendResponse({response: request.nuggetsMessage});
   });
 
 
