@@ -7,7 +7,7 @@
 	// using VAR makes it global and accessible outside of block scope!
   // NOTE: This not not injected into contextmenu.js and so the url
   // has to be updated manually! Please do so when switching env.
-	var NUGGETS_BASE_URL = devBaseUrl; 
+	var NUGGETS_BASE_URL = prodBaseUrl; 
 
 	var CURRENT_NUGGET_USER = 'currentNuggetUser';
 	var CURRENT_NUGGET_USER_TOKEN = 'currentNuggetUserToken';

@@ -23,7 +23,7 @@
     "*://*/*"
   ],
   "externally_connectable": {
-  "matches": ["*://127.0.0.1/*","http://localhost:8000/login" ,"*://*.example.com/*"]
+  "matches": ["*://*.nuggets-service.herokuapp.com/*","*://127.0.0.1/*","http://localhost:8000/login" ,"*://*.nuggets-service.herokuapp.com/*"]
   },
   "icons": {
     "16": "img/nuggets16.png", 
