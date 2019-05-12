@@ -5,3 +5,4 @@ To install the extension:
 4. Once you hit select, the nuggets icon should be available in the browser toolbar
 5. Anytime you hit a new tab you should be able to see a list of "nuggets" (they are currently fetched via a GET request from https://jsonplaceholder.typicode.com/posts). Not that only one chrome extension can 'capture' the new tab flow so if you have momentum etc. installed you might not be able to see the behavior till you disable momentum.
 6. By clicking on the extension you should be able to see the UI to add a nugget (the existing flows don't work yet since the 'auth' takes over). 
+7. Every change made to the contextmenu.js reuires a reinstallation of th extension.
