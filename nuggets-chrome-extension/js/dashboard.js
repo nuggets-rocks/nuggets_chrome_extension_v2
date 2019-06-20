@@ -15,7 +15,7 @@ function fetchNuggetsWithToken(token, userId) {
 const authHeader = 'Token ' + token;
 const fetchNuggetsUrl = 'http://localhost:8000/api/v0/user/' + userId + '/review/';	
 return fetch(fetchNuggetsUrl, {
-  method: 'get',
+  method: 'post',
   headers: {
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json',
