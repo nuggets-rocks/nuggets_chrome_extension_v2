@@ -26,7 +26,7 @@ function createNuggets(createNuggetsRequest,onSuccess, onFailure) {
 
       $.ajax({
         url: createNuggetUrl,
-        type: 'GET',
+        type: 'PUT',
         headers:{'Authorization': authHeader},
         success: onSuccess,
         error: onFailure
