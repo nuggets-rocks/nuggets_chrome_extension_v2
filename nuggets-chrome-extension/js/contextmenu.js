@@ -35,7 +35,7 @@ function createNuggets(createNuggetsRequest) {
       '/url/' + createNuggetsRequest.url;
 
 	  const req = new XMLHttpRequest();
-	  req.open("GET", createNuggetUrl);
+	  req.open("PUT", createNuggetUrl);
 	  req.setRequestHeader('Authorization', authHeader);
 	  req.send();
 	  req.onreadystatechange=function(){
